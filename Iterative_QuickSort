@@ -1,0 +1,84 @@
+/*Source = http://dreamisadream97.pixnet.net/blog/post/270582384-iterative-quick-sort */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define LIST_SIZE 10
+
+void swap(int *a, int *b){ int tmp = *a; *a = *b; *b = tmp;} // x   or may cause error if a = b
+void quickSort(int list[], int n);
+
+int conqure(int list[], int l, int r);  // return pivot position
+
+
+int main()
+{
+    srand(time(NULL));
+
+    int list[LIST_SIZE];
+
+    list[0] = 0;
+    for(int i = 1; i<LIST_SIZE; i++)
+        list[i] = rand()%100;
+
+    printf("before:\n");
+    for(int i = 0; i<LIST_SIZE; i++)
+        printf("%d ", list[i]);
+
+    quickSort(list, LIST_SIZE-1);
+
+    printf("\nafter:\n");
+    for(int i = 0; i<LIST_SIZE; i++)
+        printf("%d ", list[i]);  
+
+    return 0;  
+}
+
+void quickSort(int list[], int n)
+{
+    if(n <= 0){
+        printf("bad size!");
+        exit(-1);
+    }
+
+    int stack[n];
+    int top = -1;
+    int l, r;
+
+    l = 1, r = n;
+    stack[++top] = l;
+    stack[++top] = r;
+
+    while(top > 0){
+        r = stack[top--];
+        l = stack[top--];
+
+        int p = conqure(list, l, r);
+
+        if(p-1 > l){
+            stack[++top] = l;
+            stack[++top] = p-1;
+        }
+
+        if(p+1 < r){
+            stack[++top] = p+1;
+            stack[++top] = r;
+        }
+    }
+}
+
+
+int conqure(int list[], int l, int r)
+{
+    int pivot = list[r];
+    int i = l-1;
+
+    for(int j = l; j<r; j++)
+        if(list[j] < pivot){
+            i++;
+            swap(&list[i], &list[j]);
+        }
+    
+    swap(&list[i+1], &list[r]);
+    return i+1;
+}
