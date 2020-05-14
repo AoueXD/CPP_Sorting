@@ -1,0 +1,181 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+void swap(string *a, string *b){
+    string temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void OutPut(int size, string a[]) {
+	for(int i = 0; i < size; i++)
+		cout << a[i] << endl;
+}
+void selection_sort(int size, string a[]);
+void insertion_sort(int size, string a[]);
+void bubble_sort(int size, string a[]);
+ 
+int Partition(string arr[], int front, int end){
+    string pivot = arr[end];
+    int i = front -1;
+    for (int j = front; j < end; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    i++;
+    swap(&arr[i], &arr[end]);
+    return i;
+}
+void QuickSort(string arr[], int front, int end){
+    if (front < end) {
+        int pivot = Partition(arr, front, end);
+        QuickSort(arr, front, pivot - 1);
+        QuickSort(arr, pivot + 1, end);
+    }
+}
+int conqure_IQS(string list[], int l, int r)
+{
+    string pivot = list[r];
+    int i = l - 1;
+
+    for(int j = l; j<r; j++)
+        if(list[j] < pivot){
+            i++;
+            swap(&list[i], &list[j]);
+        }
+    
+    swap(&list[i+1], &list[r]);
+     
+    return i+1;
+}
+void Iterative_QS(string list[], int n)
+{
+    if(n <= 0){
+        printf("bad size!");
+        exit(-1);
+    }
+
+    int stack[n];
+    int top = -1;
+    int l, r;
+
+    l = 1, r = n;
+    stack[++top] = l;
+    stack[++top] = r;
+
+    while(top > 0){
+        r = stack[top--];
+        l = stack[top--];
+		int p;
+        p = conqure_IQS(list, l, r);
+
+        if(p-1 > l){
+            stack[++top] = l;
+            stack[++top] = p-1;
+        }
+
+        if(p+1 < r){
+            stack[++top] = p+1;
+            stack[++top] = r;
+        }
+    }
+}
+
+int main(){
+	srand(time(0));
+	int pos, size;
+	double start, end; //time counter
+	char mode;
+	string b = "abcdefghijklmnopqrstuvwxyz", d = "abcdef";
+	
+	cout << "Datasize = ";
+	cin >> size;
+	string *e = new string [size];
+	
+	//int len = (int) sizeof(e) / sizeof(*e);
+	
+	for(int i = 0; i < size; i++) {
+		for(int j = 0; j < 6; j++)
+			d[j] = b[(rand () % 26)];//在26個英文字園中隨機取一個 
+				e[i] = d;
+		//cout << e[i] << endl;
+	}
+	
+	cout << endl;
+	cout << "s = selection sort\n";
+	cout << "i = insertion sort\n";
+	cout << "b = bubblssse sort\n";
+	cout << "1 = Recursive_QuickSort\n";
+	cout << "2 = Iterative_QuickSort\n";
+	cout << "h = HeapSort\n";
+	cout << "I\n";
+	cout << "Whitch Mode : \n";
+	
+	while(cin >> mode) {
+		start=clock();
+		switch(mode) {
+			case 's':
+				selection_sort(size, e);
+				break;
+			case 'i':
+				insertion_sort(size, e);
+				break;
+			case 'b':
+				bubble_sort(size, e);
+				break;
+			case '1':
+				Iterative_QS(e, size - 1);
+			case '2':
+				QuickSort(e, 0, size - 1);
+			/*case 'h':
+				HeapSort();*/ 
+
+		}
+		cout << endl;
+	
+		end = clock();
+		cout << "Cost " << (end - start) / CLOCKS_PER_SEC << " sec.";
+		cout << endl << endl;
+	}
+
+	return 0;
+}
+void selection_sort(int size, string a[]) {
+	string temp = "abcdef";
+	
+	for(int i = 0; i < size; i++) {
+		int pos = i;
+		for(int j = i + 1; j < size; j++)
+			if(a[j] < a[pos])
+				pos = j;
+			temp = a[i];
+			a[i] = a[pos];
+			a[pos] = temp;
+	}
+	//OutPut(size, a);
+}
+
+void insertion_sort(int size, string a[]) {
+	string temp = "abcdef";
+	
+	for(int i = 1; i < size; i++){
+  		temp = a[i];
+   		int j;
+   		for (j = i - 1; j >= 0 && temp < a[j]; j--)
+       		a[j + 1] = a[j];
+   		a[j + 1] = temp;
+	}
+	//OutPut(size, a);
+}
+
+void bubble_sort(int size, string a[]) {
+	for(int i = 0; i < size - 1; i++) 
+		for(int j = 0; j < size - 1 - i; j++) 
+			if(a[j] > a[j + 1])
+				swap(a[j], a[j + 1]);
+	//OutPut(size, a);
+}
