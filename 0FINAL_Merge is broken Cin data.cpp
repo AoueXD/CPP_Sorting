@@ -76,7 +76,6 @@ void Merge(string A[], int p, int q, int m) {
 	}
 }
 
-
 //************///////////////////////************/////////////////////////////////////***///************///////////////////////************//////////////
 void Rmerge(string arr[], int l, int m, int r);
 /* l is for left index and r is right index of the sub-array 
@@ -257,6 +256,9 @@ int main(){
 	char mode;
 	string b = "abcdefghijklmnopqrstuvwxyz", d = "abcdef";
 	string MM = "012345sib";
+	
+	string *e;
+	
 	/*測資 = 
 	2000000
 	4000000
@@ -298,9 +300,7 @@ int main(){
 	
 	while(cin >> size) {
 
-		
-		
-		string *e = new string [size];
+		e = new string [size];
 		
 		//int len = (int) sizeof(e) / sizeof(*e);
 		
@@ -313,12 +313,26 @@ int main(){
 			//cout << "e[" << i << "] = " << e[i] << endl;
 		}
 	
-
-	
 		start=clock();
 		switch(mode) {
 			case '0':
 				sort(e, e + size);
+				break;
+			case '1':
+				Iterative_QS(e, size - 1);
+				break;
+			case '2':
+				QuickSort(e, 0, size - 1);
+				break;
+			case '3':
+				heap_sort(e, size);
+				break;
+			case '4':
+				RmergeSort(e, 0, size - 1);
+				break;
+			case '5':
+				Merge_Sort(e, 0, size - 1);
+				break;
 			case 's':
 				selection_sort(size, e);
 				break;
@@ -328,22 +342,8 @@ int main(){
 			case 'b':
 				bubble_sort(size, e);
 				break;
-			case '1':
-				Iterative_QS(e, size - 1);
-				break;
-			case '2':
-				QuickSort(e, 0, size - 1);
-				break;
-			case 'h':
-				heap_sort(e, size);
-				break;
-			case '7':
-				RmergeSort(e, 0, size - 1);
-			case '8':
-				//Merge_Sort(e, 0, size - 1);
-				Merge_Sort(e, 0, size - 1);
-
 		}
+		
 		cout << endl;
 		//OutPut(size, e);
 		end = clock();
