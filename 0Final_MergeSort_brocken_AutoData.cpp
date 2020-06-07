@@ -1,3 +1,24 @@
+/*
+1.       Part 1: sorting algorithms for small problem size
+a): sorting algorithms :
+insertion sort, selection sort, bubble sort, 
+recursive merge sort, iterative merge sort, 
+recursive quicksort , iterative quicksort,  
+heapsort, C++ built in sorting function
+B): problem size: 20,40,60,80,100,120
+c): data type: string with length 6
+2.       Part 1: sorting algorithms for huge problem size
+a): sorting algorithms: recursive merge sort, iterative merge sort recursive quicksort , iterative quicksort,  heapsort, C++ built in sorting function
+B): problem size: 200è¬,400è¬,600è¬,800è¬,1000è¬
+c): data type: string with length 6
+3.       å¿ƒå¾—å ±å‘ŠåŠæ•ˆèƒ½åˆ†æåœ–è¡¨
+   a. tile and author
+    b. methodology 
+         b.1 benchmarks
+         b.2 execution environment
+    c. experiment result
+    d. conclusion
+*/
 
 #include <iostream>
 #include <cstdlib>
@@ -23,9 +44,9 @@ void Merge(string A[], int p, int q, int m);
 void Merge_Sort(string A[], int p, int q) {
 	if (p < q) {
 		int m = (p + q) / 2;
-		Merge_Sort(A, p, m);  //»¼°j±Æ§Ç¤l°}¦C A[p...m]
-		Merge_Sort(A, m + 1, q); //»¼°j±Æ§Ç¤l°}¦C A[m+1...q]
-		Merge(A, p, q, m);  //±N¥ª¥k¨â­Ó¥H±Æ§Ç¦nªº¤l°}¦C¦X¨Ö
+		Merge_Sort(A, p, m);  //éè¿´æ’åºå­é™£åˆ— A[p...m]
+		Merge_Sort(A, m + 1, q); //éè¿´æ’åºå­é™£åˆ— A[m+1...q]
+		Merge(A, p, q, m);  //å°‡å·¦å³å…©å€‹ä»¥æ’åºå¥½çš„å­é™£åˆ—åˆä½µ
 	}
 }
 void Merge(string A[], int p, int q, int m) {
@@ -131,15 +152,15 @@ void Rmerge(string arr[], int l, int m, int r)
 } 
 //HeapSort//////////////////////////////////////////////////////////////// 
 void max_heapify(string arr[], int start, int end) {
-    // «Ø¥ß¤÷¸`ÂI«ü¼Ğ©M¤l¸`ÂI«ü¼Ğ
+    // å»ºç«‹çˆ¶ç¯€é»æŒ‡æ¨™å’Œå­ç¯€é»æŒ‡æ¨™
     int dad = start;
     int son = dad * 2 + 1;
-    while (son <= end) { // ­Y¤l¸`ÂI«ü¼Ğ¦b½d³ò¤º¤~°µ¤ñ¸û
-        if (son + 1 <= end && arr[son] < arr[son + 1]) // ¥ı¤ñ¸û¨â­Ó¤l¸`ÂI¤j¤p¡A¿ï¾Ü³Ì¤jªº
+    while (son <= end) { // è‹¥å­ç¯€é»æŒ‡æ¨™åœ¨ç¯„åœå…§æ‰åšæ¯”è¼ƒ
+        if (son + 1 <= end && arr[son] < arr[son + 1]) // å…ˆæ¯”è¼ƒå…©å€‹å­ç¯€é»å¤§å°ï¼Œé¸æ“‡æœ€å¤§çš„
             son++;
-        if (arr[dad] > arr[son]) // ¦pªG¤÷¸`ÂI¤j©ó¤l¸`ÂI¥Nªí½Õ¾ã§¹²¦¡Aª½±µ¸õ¥X¨ç¼Æ
+        if (arr[dad] > arr[son]) // å¦‚æœçˆ¶ç¯€é»å¤§æ–¼å­ç¯€é»ä»£è¡¨èª¿æ•´å®Œç•¢ï¼Œç›´æ¥è·³å‡ºå‡½æ•¸
             return;
-        else { // §_«h¥æ´«¤÷¤l¤º®e¦AÄ~Äò¤l¸`ÂI©M®]¸`ÂI¤ñ¸û
+        else { // å¦å‰‡äº¤æ›çˆ¶å­å…§å®¹å†ç¹¼çºŒå­ç¯€é»å’Œå­«ç¯€é»æ¯”è¼ƒ
             swap(arr[dad], arr[son]);
             dad = son;
             son = dad * 2 + 1;
@@ -148,10 +169,10 @@ void max_heapify(string arr[], int start, int end) {
 }
 
 void heap_sort(string arr[], int len) {
-    // ªì©l¤Æ¡Ai±q³Ì«á¤@­Ó¤÷¸`ÂI¶}©l½Õ¾ã
+    // åˆå§‹åŒ–ï¼Œiå¾æœ€å¾Œä¸€å€‹çˆ¶ç¯€é»é–‹å§‹èª¿æ•´
     for (int i = len / 2 - 1; i >= 0; i--)
         max_heapify(arr, i, len - 1);
-    // ¥ı±N²Ä¤@­Ó¤¸¯À©M¤w?±Æ¦nªº¤¸¯À«e¤@¦ì°µ¥æ´«¡A¦A±q·s½Õ¾ã(??¾ãªº¤¸¯À¤§«eªº¤¸¯À)¡Aª½¨ì±Æ§Ç§¹²¦
+    // å…ˆå°‡ç¬¬ä¸€å€‹å…ƒç´ å’Œå·²?æ’å¥½çš„å…ƒç´ å‰ä¸€ä½åšäº¤æ›ï¼Œå†å¾æ–°èª¿æ•´(??æ•´çš„å…ƒç´ ä¹‹å‰çš„å…ƒç´ )ï¼Œç›´åˆ°æ’åºå®Œç•¢
     for (int i = len - 1; i > 0; i--) {
         swap(arr[0], arr[i]);
         max_heapify(arr, 0, i - 1);
@@ -241,7 +262,7 @@ int main(){
 	
 	int size[5] = {2000000, 4000000, 6000000, 8000000, 10000000}; //size choise
 	
-	/*´ú¸ê = 
+	/*æ¸¬è³‡ = 
 	20
 	40
 	60
@@ -280,7 +301,7 @@ int main(){
 		
 		for(int i = 0; i < size[s]; i++) {
 			for(int j = 0; j < 6; j++) {
-				d[j] = b[(rand () % 26)];//¦b26­Ó­^¤å¦r¶é¤¤ÀH¾÷¨ú¤@­Ó
+				d[j] = b[(rand () % 26)];//åœ¨26å€‹è‹±æ–‡å­—åœ’ä¸­éš¨æ©Ÿå–ä¸€å€‹
 				//cout << d[j] << endl;
 			}
 			e[i] = d;
@@ -294,7 +315,7 @@ int main(){
 			
 			string *ee = new string[size[s]]; //ee is the data of each algorithm 
 			//ee = e;
-			//switch ¸Ì­±¥u±µ¨üCHAR? 
+			//switch è£¡é¢åªæ¥å—CHAR? 
 			for(int AS = 0; AS < size[s]; AS++)
 				ee[AS] = e[AS];
 				
