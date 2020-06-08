@@ -23,7 +23,7 @@ c): data type: string with length 6
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <Algorithm>
+#include <algorithm>
 #include <string>
 #include <map>
  
@@ -55,8 +55,8 @@ void Merge(string A[], int p, int q, int m) {
 	/*Let L[0...n1] and R[0...n2] be new arrays
 	and copy A[p...m] to L[0...n1] 
 	and copy A[m+1...q] to R[0...n2] */
-	string* L = new string[n1];
-	string* R = new string[n2];
+	string* L = new string[n1 + 1];
+	string* R = new string[n2 + 1];
 
 	for (int i = 0; i < n1; i++) {
 		L[i] = A[p + i]; 
@@ -64,8 +64,10 @@ void Merge(string A[], int p, int q, int m) {
 	for (int i = 0; i < n2; i++) {
 		R[i] = A[i + m + 1]; 
 	}
-/*	L[n1] = 21474;
-	R[n2] = 21474;*/ 
+	
+	L[n1] = "zzzzzz";
+	R[n2] = "zzzzzz"; 
+	
 	int i = 0, j = 0;
 	for (int k = p; k <= q; k++) {
 		if (L[i] <= R[j]) {
@@ -104,7 +106,8 @@ void Rmerge(string arr[], int l, int m, int r)
     int n2 =  r - m; 
   
     /* create temp arrays */
-    string L[n1], R[n2]; 
+    string *L = new string[n1 + 1];
+	string *R = new string[n2 + 1]; // remember +1
   
     /* Copy data to temp arrays L[] and R[] */
     for (i = 0; i < n1; i++) 
@@ -114,8 +117,8 @@ void Rmerge(string arr[], int l, int m, int r)
   
     /* Merge the temp arrays back into arr[l..r]*/
     
-    L[n1] = 21478888;
-    R[n2] = 21478888;
+    L[n1] = "zzzzzz";
+    R[n2] = "zzzzzz"; // get compiler pass without declare 不知道為啥 
     i = 0; 
     j = 0; 
     k = l; 
@@ -310,11 +313,11 @@ int main(){
 	
 
 
-		for(mm = 0; mm < 3 ; mm++) {
+		for(mm = 0; mm < 6 ; mm++) {
 			cout << endl << endl << mm;
 			
 			string *ee = new string[size[s]]; //ee is the data of each algorithm 
-			//ee = e;
+			//ee = e; //you can't do that
 			//switch 裡面只接受CHAR? 
 			for(int AS = 0; AS < size[s]; AS++)
 				ee[AS] = e[AS];
@@ -334,13 +337,13 @@ int main(){
 					Recursive_QS(ee, 0, size[s] - 1);
 					break;
 				case '3':
-					heap_sort(e, size[s]);
+					heap_sort(ee, size[s]);
 					break;
 				case '4':
 					RmergeSort(ee, 0, size[s] - 1);
 					break;
 				case '5':
-					Merge_Sort(e, 0, size[s] - 1);
+					Merge_Sort(ee, 0, size[s] - 1);
 					break;
 				case 's':
 					selection_sort(size[s], ee);
