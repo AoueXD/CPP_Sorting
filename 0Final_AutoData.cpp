@@ -253,9 +253,9 @@ void Iterative_QS(string list[], int n)
     }
 }
 
-void selection_sort(int size, string a[]);
-void insertion_sort(int size, string a[]);
-void bubble_sort(int size, string a[]);
+void Selection_sort(int size, string a[]);
+void Insertion_sort(int size, string a[]);
+void Bubble_sort(int size, string a[]);
 
 int main(){
 	srand(time(0));
@@ -281,7 +281,7 @@ int main(){
 	
 	*/
 	cout << "0 = CPP build in sorting function\n";
-	cout << "1 = Interative QuickSort\n";
+	cout << "1 = Iterative QuickSort\n";
 	cout << "2 = Recursive QuickSort\n";
 	cout << "3 = HeapSort\n";
 	cout << "4 = Interactive MergeSort\n";
@@ -292,15 +292,13 @@ int main(){
 	cout << "There are nine algorithms: \n\n";
 	
 	string Mode = "012345sib"; //Mode choise
-	int mm;
-	char MODE;
+	
 	for(int s = 0; s < 9; s++) {
 		
 		cout << "Size is " << size[s] << endl;
 		string *e = new string [size[s]]; //e is template and module
 		
-	/*int len = (int) sizeof(e) / sizeof(*e);
-		cout << "586666666666666666666666666660" << endl << len;*/
+	//int len = (int) sizeof(e) / sizeof(*e);  // 不適用於POINTER 
 		
 		for(int i = 0; i < size[s]; i++) {
 			for(int j = 0; j < 6; j++) {
@@ -311,20 +309,18 @@ int main(){
 			//cout << "e[" << i << "] = " << e[i] << endl;
 		}
 	
-
-
-		for(mm = 0; mm < 6 ; mm++) {
+		for(int mm = 0; mm < 6 ; mm++) {
 			cout << endl << endl << mm;
 			
 			string *ee = new string[size[s]]; //ee is the data of each algorithm 
 			//ee = e; //you can't do that
 			//switch 裡面只接受CHAR? 
-			for(int AS = 0; AS < size[s]; AS++)
-				ee[AS] = e[AS];
+			for(int k = 0; k < size[s]; k++)
+				ee[k] = e[k];
 				
 			start = clock();
 			
-			MODE = Mode[mm];
+			char MODE = Mode[mm];
 			
 			switch(MODE) {
 				case '0':
@@ -346,13 +342,13 @@ int main(){
 					Merge_Sort(ee, 0, size[s] - 1);
 					break;
 				case 's':
-					selection_sort(size[s], ee);
+					Selection_sort(size[s], ee);
 					break;
 				case 'i':
-					insertion_sort(size[s], ee);
+					Insertion_sort(size[s], ee);
 					break;
 				case 'b':
-					bubble_sort(size[s], ee);
+					Bubble_sort(size[s], ee);
 					break;
 	
 			}
@@ -361,7 +357,7 @@ int main(){
 			end = clock();
 			cout << "Cost " << (end - start) / CLOCKS_PER_SEC << " sec.";
 			cout << endl << endl;
-			delete []ee; 
+			delete[] ee; 
 		}
 		
 		delete[] e;
@@ -371,7 +367,7 @@ int main(){
 	return 0;
 }
 
-void selection_sort(int size, string a[]) {
+void Selection_sort(int size, string a[]) {
 	string temp = "abcdef";
 	
 	for(int i = 0; i < size; i++) {
@@ -386,7 +382,7 @@ void selection_sort(int size, string a[]) {
 	//OutPut(size, a);
 }
 
-void insertion_sort(int size, string a[]) {
+void Insertion_sort(int size, string a[]) {
 	string temp = "abcdef";
 	
 	for(int i = 1; i < size; i++){
@@ -399,7 +395,7 @@ void insertion_sort(int size, string a[]) {
 	//OutPut(size, a);
 }
 
-void bubble_sort(int size, string a[]) {
+void Bubble_sort(int size, string a[]) {
 	for(int i = 0; i < size - 1; i++) 
 		for(int j = 0; j < size - 1 - i; j++) 
 			if(a[j] > a[j + 1])
