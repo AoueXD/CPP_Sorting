@@ -8,7 +8,9 @@ heapsort, C++ built in sorting function
 B): problem size: 20,40,60,80,100,120
 c): data type: string with length 6
 2.       Part 1: sorting algorithms for huge problem size
-a): sorting algorithms: recursive merge sort, iterative merge sort recursive quicksort , iterative quicksort,  heapsort, C++ built in sorting function
+a): sorting algorithms: recursive merge sort, 
+iterative merge sort recursive quicksort , iterative quicksort,  
+heapsort, C++ built in sorting function
 B): problem size: 200萬,400萬,600萬,800萬,1000萬
 c): data type: string with length 6
 3.       心得報告及效能分析圖表
@@ -39,67 +41,8 @@ void OutPut(int size, string a[]) {
 	for(int i = 0; i < size; i++)
 		cout << a[i] << endl;
 }
-void Merge(string A[], int p, int q, int m);
-
-void Merge_Sort(string A[], int p, int q) {
-	if (p < q) {
-		int m = (p + q) / 2;
-		Merge_Sort(A, p, m);  //遞迴排序子陣列 A[p...m]
-		Merge_Sort(A, m + 1, q); //遞迴排序子陣列 A[m+1...q]
-		Merge(A, p, q, m);  //將左右兩個以排序好的子陣列合併
-	}
-}
-void Merge(string A[], int p, int q, int m) {
-	int n1 = m - p + 1;
-	int n2 = q - m;
-	/*Let L[0...n1] and R[0...n2] be new arrays
-	and copy A[p...m] to L[0...n1] 
-	and copy A[m+1...q] to R[0...n2] */
-	string* L = new string[n1 + 1];
-	string* R = new string[n2 + 1];
-
-	for (int i = 0; i < n1; i++) {
-		L[i] = A[p + i]; 
-	}
-	for (int i = 0; i < n2; i++) {
-		R[i] = A[i + m + 1]; 
-	}
-	
-	L[n1] = "zzzzzz";
-	R[n2] = "zzzzzz"; 
-	
-	int i = 0, j = 0;
-	for (int k = p; k <= q; k++) {
-		if (L[i] <= R[j]) {
-			A[k] = L[i];
-			i++;
-		}
-		else {
-			A[k] = R[j];
-			j++;
-		}
-	}
-}
-
-
-//************///////////////////////************/////////////////////////////////////***///************///////////////////////************//////////////
-void Rmerge(string arr[], int l, int m, int r);
-/* l is for left index and r is right index of the sub-array 
-  of arr to be sorted */
-void RmergeSort(string arr[], int l, int r) 
-{ 
-   if (l < r) 
-   { 
-      int m = l + (r - l) / 2; //Same as (l+r)/2 but avoids overflow for large l & h 
-      RmergeSort(arr, l, m); 
-      RmergeSort(arr, m + 1, r); 
-      Rmerge(arr, l, m, r); 
-   } 
-   //50 + (60 - 50) / 2 = 55 
- } 
-  
 /* Function to merge the two haves arr[l..m] and arr[m+1..r] of array arr[] */
-void Rmerge(string arr[], int l, int m, int r) 
+void Merge(string arr[], int l, int m, int r) 
 { 
     int i, j, k; 
     int n1 = m - l + 1; 
@@ -153,6 +96,32 @@ void Rmerge(string arr[], int l, int m, int r)
         k++; 
     } 
 } 
+
+void Iterative_MS(string A[], int p, int q) {
+	if (p < q) {
+		int m = (p + q) / 2;
+		Iterative_MS(A, p, m);  //遞迴排序子陣列 A[p...m]
+		Iterative_MS(A, m + 1, q); //遞迴排序子陣列 A[m+1...q]
+		Merge(A, p, m, q);  //將左右兩個以排序好的子陣列合併
+	}
+}
+
+//************///////////////////////************/////////////////////////////////
+/* l is for left index and r is right index of the sub-array 
+  of arr to be sorted */
+void Recursive_MS(string arr[], int l, int r) 
+{ 
+   if (l < r) 
+   { 
+      int m = l + (r - l) / 2; //Same as (l+r)/2 but avoids overflow for large l & h 
+      Recursive_MS(arr, l, m); 
+      Recursive_MS(arr, m + 1, r); 
+      Merge(arr, l, m, r); 
+   } 
+   //50 + (60 - 50) / 2 = 55 
+ } 
+  
+
 //HeapSort//////////////////////////////////////////////////////////////// 
 void max_heapify(string arr[], int start, int end) {
     // 建立父節點指標和子節點指標
@@ -336,10 +305,10 @@ int main(){
 					heap_sort(ee, size[s]);
 					break;
 				case '4':
-					RmergeSort(ee, 0, size[s] - 1);
+					Iterative_MS(ee, 0, size[s] - 1);
 					break;
 				case '5':
-					Merge_Sort(ee, 0, size[s] - 1);
+					Recursive_MS(ee, 0, size[s] - 1);
 					break;
 				case 's':
 					Selection_sort(size[s], ee);
