@@ -27,7 +27,6 @@ c): data type: string with length 6
 #include <ctime>
 #include <algorithm>
 #include <string>
-#include <map>
  
 using namespace std;
 
@@ -65,15 +64,12 @@ void Merge(string arr[], int l, int m, int r)
     i = 0; 
     j = 0; 
     k = l; 
-    while (i < n1 && j < n2) 
-    { 
-        if (L[i] <= R[j]) 
-        { 
+    while (i < n1 && j < n2) { 
+        if (L[i] <= R[j]) { 
             arr[k] = L[i]; 
             i++; 
         } 
-        else
-        { 
+        else{ 
             arr[k] = R[j]; 
             j++; 
         } 
@@ -81,20 +77,21 @@ void Merge(string arr[], int l, int m, int r)
     } 
   
     /* Copy the remaining elements of L[], if there are any */
-    while (i < n1) 
-    { 
+    while (i < n1) { 
         arr[k] = L[i]; 
         i++; 
         k++; 
     } 
   
     /* Copy the remaining elements of R[], if there are any */
-    while (j < n2) 
-    { 
+    while (j < n2) { 
         arr[k] = R[j]; 
         j++; 
         k++; 
     } 
+    
+    delete []L;
+    delete []R;
 } 
 
 void Iterative_MS(string A[], int p, int q) {
@@ -106,7 +103,6 @@ void Iterative_MS(string A[], int p, int q) {
 	}
 }
 
-//************///////////////////////************/////////////////////////////////
 /* l is for left index and r is right index of the sub-array 
   of arr to be sorted */
 void Recursive_MS(string arr[], int l, int r) 
@@ -120,8 +116,6 @@ void Recursive_MS(string arr[], int l, int r)
    } 
    //50 + (60 - 50) / 2 = 55 
  } 
-  
-
 //HeapSort//////////////////////////////////////////////////////////////// 
 void max_heapify(string arr[], int start, int end) {
     // 建立父節點指標和子節點指標
@@ -150,7 +144,7 @@ void heap_sort(string arr[], int len) {
         max_heapify(arr, 0, i - 1);
     }
 }
-/////////////////////////
+
 int Partition(string arr[], int front, int end){
     string pivot = arr[end];
     int i = front -1;
@@ -172,7 +166,6 @@ void Recursive_QS(string arr[], int front, int end){
     }
 }
 
-///////////////////
 int conqure_IQS(string list[], int l, int r)
 {
     string pivot = list[r];
@@ -230,7 +223,7 @@ int main(){
 	srand(time(0));
 	int pos;
 	double start, end; //time counter
-	string b = "abcdefghijklmnopqrstuvwxyz", d = "abcdef";
+	string letter = "abcdefghijklmnopqrstuvwxyz", randstring = "abcdef";
 	
 	int size[5] = {2000000, 4000000, 6000000, 8000000, 10000000}; //size choise
 	
@@ -255,9 +248,9 @@ int main(){
 	cout << "3 = HeapSort\n";
 	cout << "4 = Interactive MergeSort\n";
 	cout << "5 = Recursive MergeSor\n";
-	cout << "s = selection sort\n";
-	cout << "i = insertion sort\n";
-	cout << "b = bubble sort\n";
+	cout << "s = Selection sort\n";
+	cout << "i = Insertion sort\n";
+	cout << "b = Bubble sort\n";
 	cout << "There are nine algorithms: \n\n";
 	
 	string Mode = "012345sib"; //Mode choise
@@ -265,27 +258,27 @@ int main(){
 	for(int s = 0; s < 9; s++) {
 		
 		cout << "Size is " << size[s] << endl;
-		string *e = new string [size[s]]; //e is template and module
+		string *module = new string [size[s]]; //e is template and module
 		
 	//int len = (int) sizeof(e) / sizeof(*e);  // 不適用於POINTER 
 		
 		for(int i = 0; i < size[s]; i++) {
 			for(int j = 0; j < 6; j++) {
-				d[j] = b[(rand () % 26)];//在26個英文字園中隨機取一個
+				randstring[j] = letter[(rand () % 26)];//在26個英文字園中隨機取一個
 				//cout << d[j] << endl;
 			}
-			e[i] = d;
+			module[i] = randstring;
 			//cout << "e[" << i << "] = " << e[i] << endl;
 		}
 	
 		for(int mm = 0; mm < 6 ; mm++) {
 			cout << endl << endl << mm;
 			
-			string *ee = new string[size[s]]; //ee is the data of each algorithm 
+			string *arr = new string[size[s]]; //ee is the data of each algorithm 
 			//ee = e; //you can't do that
 			//switch 裡面只接受CHAR? 
 			for(int k = 0; k < size[s]; k++)
-				ee[k] = e[k];
+				arr[k] = module[k];
 				
 			start = clock();
 			
@@ -293,31 +286,31 @@ int main(){
 			
 			switch(MODE) {
 				case '0':
-					sort(ee, ee + size[s]);
+					sort(arr, arr + size[s]);
 					break;
 				case '1':
-					Iterative_QS(ee, size[s] - 1);
+					Iterative_QS(arr, size[s] - 1);
 					break;
 				case '2':
-					Recursive_QS(ee, 0, size[s] - 1);
+					Recursive_QS(arr, 0, size[s] - 1);
 					break;
 				case '3':
-					heap_sort(ee, size[s]);
+					heap_sort(arr, size[s]);
 					break;
 				case '4':
-					Iterative_MS(ee, 0, size[s] - 1);
+					Iterative_MS(arr, 0, size[s] - 1);
 					break;
 				case '5':
-					Recursive_MS(ee, 0, size[s] - 1);
+					Recursive_MS(arr, 0, size[s] - 1);
 					break;
 				case 's':
-					Selection_sort(size[s], ee);
+					Selection_sort(size[s], arr);
 					break;
 				case 'i':
-					Insertion_sort(size[s], ee);
+					Insertion_sort(size[s], arr);
 					break;
 				case 'b':
-					Bubble_sort(size[s], ee);
+					Bubble_sort(size[s], arr);
 					break;
 	
 			}
@@ -326,10 +319,10 @@ int main(){
 			end = clock();
 			cout << "Cost " << (end - start) / CLOCKS_PER_SEC << " sec.";
 			cout << endl << endl;
-			delete[] ee; 
+			delete[] arr; 
 		}
 		
-		delete[] e;
+		delete[] module;
 		cout << "XDDD"; 
 	}
 
