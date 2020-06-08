@@ -225,7 +225,7 @@ int main(){
 	double start, end; //time counter
 	string letter = "abcdefghijklmnopqrstuvwxyz", randstring = "abcdef";
 	
-	int size[5] = {2000000, 4000000, 6000000, 8000000, 10000000}; //size choise
+	int size[5] = {2000, 4000000, 6000000, 8000000, 10000000}; //size choise
 	
 	/*測資 = 
 	20
@@ -255,10 +255,10 @@ int main(){
 	
 	string Mode = "012345sib"; //Mode choise
 	
-	for(int s = 0; s < 9; s++) {
+	for(int s = 0; s < 5; s++) {
 		
-		cout << "Size is " << size[s] << endl;
-		string *module = new string [size[s]]; //e is template and module
+		cout << "Size is " << size[s] << endl << endl;
+		string *module = new string [size[s]]; //e is template and module 
 		
 	//int len = (int) sizeof(e) / sizeof(*e);  // 不適用於POINTER 
 		
@@ -272,7 +272,7 @@ int main(){
 		}
 	
 		for(int mm = 0; mm < 6 ; mm++) {
-			cout << endl << endl << mm;
+			//cout << mm << "	"; //Blank is a tab, and matches line 319
 			
 			string *arr = new string[size[s]]; //ee is the data of each algorithm 
 			//ee = e; //you can't do that
@@ -314,16 +314,14 @@ int main(){
 					break;
 	
 			}
-			cout << endl;
 			//OutPut(size, e);
 			end = clock();
-			cout << "Cost " << (end - start) / CLOCKS_PER_SEC << " sec.";
-			cout << endl << endl;
+			//cout << "Cost " << (end - start) / CLOCKS_PER_SEC << " sec." << endl;
+			cout << (end - start) / CLOCKS_PER_SEC << endl;
 			delete[] arr; 
 		}
-		
 		delete[] module;
-		cout << "XDDD"; 
+		cout << endl;
 	}
 
 	return 0;
