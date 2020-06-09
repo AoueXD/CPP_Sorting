@@ -94,14 +94,33 @@ void Merge(string arr[], int l, int m, int r)
     delete []R;
 } 
 
-void Iterative_MS(string A[], int p, int q) {
-	if (p < q) {
-		int m = (p + q) / 2;
-		Iterative_MS(A, p, m);  //遞迴排序子陣列 A[p...m]
-		Iterative_MS(A, m + 1, q); //遞迴排序子陣列 A[m+1...q]
-		Merge(A, p, m, q);  //將左右兩個以排序好的子陣列合併
-	}
-}
+//void Iterative_MS(string A[], int p, int q) {
+void Iterative_MS(string arr[], int n) 
+{ 
+   int curr_size;  // For current size of subarrays to be merged 
+                   // curr_size varies from 1 to n/2 
+   int left_start; // For picking starting index of left subarray 
+                   // to be merged 
+  
+   // Merge subarrays in bottom up manner.  First merge subarrays of 
+   // size 1 to create sorted subarrays of size 2, then merge subarrays 
+   // of size 2 to create sorted subarrays of size 4, and so on. 
+   for (curr_size=1; curr_size<=n-1; curr_size = 2*curr_size) 
+   { 
+       // Pick starting point of different subarrays of current size 
+       for (left_start=0; left_start<n-1; left_start += 2*curr_size) 
+       { 
+           // Find ending point of left subarray. mid+1 is starting  
+           // point of right 
+           int mid = min(left_start + curr_size - 1, n-1); 
+  
+           int right_end = min(left_start + 2*curr_size - 1, n-1); 
+  
+           // Merge Subarrays arr[left_start...mid] & arr[mid+1...right_end] 
+           Merge(arr, left_start, mid, right_end); 
+       } 
+   } 
+} 
 
 /* l is for left index and r is right index of the sub-array 
   of arr to be sorted */
@@ -225,7 +244,7 @@ int main(){
 	double start, end; //time counter
 	string letter = "abcdefghijklmnopqrstuvwxyz", randstring = "abcdef";
 	
-	int size[5] = {2000, 4000000, 6000000, 8000000, 10000000}; //size choise
+	int size[5] = {2000000, 4000000, 6000000, 8000000, 10000000}; //size choise
 	
 	/*測資 = 
 	20
@@ -298,7 +317,7 @@ int main(){
 					heap_sort(arr, size[s]);
 					break;
 				case '4':
-					Iterative_MS(arr, 0, size[s] - 1);
+					Iterative_MS(arr, size[s] - 1);
 					break;
 				case '5':
 					Recursive_MS(arr, 0, size[s] - 1);
